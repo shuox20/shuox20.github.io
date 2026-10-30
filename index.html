@@ -2,73 +2,303 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Shuo Xie</title>
+    <meta name="description" content="Shuo Xie — Ph.D. student at TTIC working on optimization and language model training.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Latin fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+    <!-- Chinese name only: subset to the two characters, so it stays tiny -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400&text=%E8%A7%A3%E8%AF%B4&display=swap" rel="stylesheet">
+
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-      </script>
-      <script type="text/javascript"
+    </script>
+    <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-      </script>
+    </script>
+
+    <style>
+        :root {
+            --text: #1c1f24;
+            --muted: #636b75;
+            --faint: #9aa1aa;
+            --accent: #8c2f39;          /* deep maroon */
+            --accent-soft: #f7efef;
+            --border: #e8e6e3;
+            --bg: #fcfbf9;              /* warm off-white */
+            --serif: "Source Serif 4", "Iowan Old Style", Georgia, "Songti SC", "STSong", serif;
+            --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            --cn: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        }
+        * { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            font-size: 15.5px;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color .15s, border-color .15s; }
+        a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+        .page {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 80px 32px 56px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 64px;
+        }
+
+        /* ---------- Sidebar ---------- */
+        aside { position: sticky; top: 80px; align-self: start; }
+        .name {
+            font-family: var(--serif);
+            font-size: 2.3rem;
+            font-weight: 600;
+            line-height: 1.15;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+        .name-cn {
+            font-family: var(--cn);
+            font-weight: 400;
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin-left: 10px;
+            letter-spacing: 0.02em;
+            vertical-align: 0.12em;
+        }
+        .role {
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+        .role b { color: var(--text); font-weight: 500; }
+        .rule { width: 36px; height: 2px; background: var(--accent); border: 0; margin: 22px 0; }
+        .links { list-style: none; margin: 0; padding: 0; font-size: 0.95rem; }
+        .links li { margin: 4px 0; }
+        .links a { color: var(--text); border-bottom: 1px solid var(--border); }
+        .links a:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+
+        /* ---------- Main ---------- */
+        main { min-width: 0; }
+        section + section { margin-top: 52px; }
+        h2 {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0 0 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        h2::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+        p { margin: 0 0 14px; }
+
+        .notice {
+            margin-top: 22px;
+            padding: 14px 18px;
+            background: var(--accent-soft);
+            border-radius: 8px;
+            font-size: 0.97rem;
+        }
+        .notice b { color: var(--accent); font-weight: 600; }
+
+        .row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+        .row .when { color: var(--faint); font-size: 0.9rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+        /* Publications */
+        .note { color: var(--faint); font-size: 0.85rem; margin: -6px 0 22px; }
+        .pubs { list-style: none; margin: 0; padding: 0; }
+        .pubs li {
+            display: grid;
+            grid-template-columns: 112px 1fr;
+            gap: 18px;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+        .pubs li:first-child { border-top: 0; padding-top: 0; }
+        .venue {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: var(--muted);
+            padding-top: 3px;
+            line-height: 1.4;
+        }
+        .venue .tag {
+            display: inline-block;
+            margin-top: 5px;
+            padding: 1px 7px;
+            font-size: 0.7rem;
+            color: var(--accent);
+            border: 1px solid currentColor;
+            border-radius: 3px;
+            letter-spacing: 0.04em;
+        }
+        .pub-title { font-weight: 500; line-height: 1.5; }
+        .pub-title a { color: var(--text); }
+        .pub-title a:hover { color: var(--accent); }
+        .pub-authors { color: var(--muted); font-size: 0.92rem; margin-top: 3px; }
+        .pub-authors b { color: var(--text); font-weight: 600; }
+
+        ul.plain { margin: 0; padding: 0; list-style: none; }
+        ul.plain li { padding-left: 16px; position: relative; margin-bottom: 4px; }
+        ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            color: var(--faint);
+            font-size: 0.82rem;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 820px) {
+            .page { grid-template-columns: 1fr; gap: 36px; padding: 48px 22px 40px; }
+            aside { position: static; }
+            .links li { display: inline; margin: 0 14px 0 0; }
+        }
+        @media (max-width: 520px) {
+            .pubs li { grid-template-columns: 1fr; gap: 4px; }
+            .row { flex-direction: column; gap: 0; }
+        }
+    </style>
 </head>
 <body>
+<div class="page">
 
-<p>
-I am Shuo Xie (解说), a third-year Ph.D. student at <a href="https://www.ttic.edu/">Toyota Technological Institute at Chicago</a>, advised by Professor <a href="https://zhiyuanli.ttic.edu/">Zhiyuan Li</a>.
-I am currently interested in optimization and LLMs. <br>
-Previously, I received a B.S. degree in statistics from Peking University and a M.S. degree in statistics from University of Chicago and did research in natural language processing with <a href="https://www.hongyuanmei.com/">Hongyuan Mei</a> and <a href="https://www.cs.unc.edu/~airsplay/">Hao Tan. 
-</p>
-
-<!-- <p>
-Mail address: <a href="mailto:shuox@ttic.edu">shuox@ttic.edu </a> <br>
-</p> -->
-
-<p>
-[<a href="mailto:shuox@ttic.edu">Email</a>][<a href="https://scholar.google.com/citations?hl=en&user=V1qU5dwAAAAJ">Google Scholar</a>][<a href="https://github.com/shuox20">Github</a>]
-</p>
-
-<p>
-<h2>Publications</h2>
-</p>
-($\alpha$-$\beta$) indicates alphabetical order. * indicates equal contribution. 
-<p>
-  <a href="https://arxiv.org/abs/2511.20584">A Tale of Two Geometries: Adaptive Optimizers and Non-Euclidean Descent</a> <br>
-    <b>Shuo Xie*</b>, Tianhao Wang*, Beining Wu, Zhiyuan Li <br>
-    ICLR 2026 <br><br>
-    <a href="https://www.arxiv.org/abs/2512.00763">Provable Benefit of Sign Descent: A Minimal Model Under Heavy-Tailed Class Imbalance</a> <br>
-    Robin Yadav, <b>Shuo Xie</b>, Tianhao Wang, Zhiyuan Li <br>
-    NeurIPS 2025 Workshop on Optimization for Machine Learning <b>(Oral)</b><br><br>
-    <a href="https://arxiv.org/abs/2506.01936">Should Decision-Makers Reveal the Classifiers in Online Strategic Classification?</a> <br>
-    ($\alpha$-$\beta$) Han Shao, <b>Shuo Xie</b>, Kunhe Yang <br>
-    ICML 2025 <br><br>
-    <a href="https://arxiv.org/abs/2503.10537">Structured Preconditioners in Adaptive Optimization: A Unified Analysis</a> <br>
-    <b>Shuo Xie</b>, Tianhao Wang, Sashank reddi, Sanjiv Kumar, Zhiyuan Li <br>
-    ICML 2025 <br><br>
-    <a href="https://arxiv.org/abs/2410.08198">Adam Exploits $\ell_\infty$-geometry of Loss Landscape via Coordinate-wise Adaptivity.</a> <br>
-    <b>Shuo Xie</b>, Mohamad Amin Mohamadi, Zhiyuan Li <br>
-    ICLR 2025 <b>(Spotlight)</b><br><br>
-    <a href="https://arxiv.org/abs/2404.04454">Implicit Bias of AdamW: $\ell_\infty$-Norm Constrained Optimization</a> <br>
-    <b>Shuo Xie</b>, Zhiyuan Li <br>
-    ICML 2024<br><br>
-<a href="https://arxiv.org/abs/2210.10041">Hidden State Variability of Pretrained Language Models Can Guide Computation Reduction for Transfer Learning</a> <br>
-<b>Shuo Xie</b>, Jiahao Qiu, Ankita Pasad, Li Du, Qing Qu, Hongyuan Mei <br>
-Findings of EMNLP 2022
-</p>
-
-<p>
-    <h2>Honors and Awards</h2>
+<aside>
+    <h1 class="name">Shuo Xie<span class="name-cn">解说</span></h1>
+    <p class="role">
+        <b>Ph.D. Student</b><br>
+        Toyota Technological Institute at Chicago
     </p>
-    
+    <hr class="rule">
+    <ul class="links">
+        <li><a href="mailto:shuox@ttic.edu">Email</a></li>
+        <li><a href="https://scholar.google.com/citations?hl=en&user=V1qU5dwAAAAJ">Google Scholar</a></li>
+        <li><a href="https://github.com/shuox20">GitHub</a></li>
+    </ul>
+</aside>
+
+<main>
+
+<section>
+    <h2>About</h2>
     <p>
-    Gold Medal in Chinese Mathematical Olympiad (CMO) <br>
-    Rank 1st in Chinese Girls’ Mathematical Olympiad (CGMO) <br>
+    I am a fourth-year Ph.D. student at <a href="https://www.ttic.edu/">Toyota Technological Institute at Chicago</a>, advised by Professor <a href="https://zhiyuanli.ttic.edu/">Zhiyuan Li</a>.
+    My research interests lie broadly in optimization and language model training.
     </p>
-<h2>Miscellaneous</h2>
-</p>
+    <p>
+    My work focuses on the theory of deep learning optimization, particularly understanding why adaptive methods such as Adam are effective for training large language models.
+    I also have extensive hands-on experience training language models and building and debugging empirical ML pipelines.
+    </p>
+    <!-- Optional post-training sentence (uncomment if you want it on the site):
+    <p>
+    More recently, I have become interested in generalization in LLM post-training: how SFT and RL differ in what they memorize and generalize from the same supervision.
+    </p>
+    -->
+    <p>
+    Previously, I received a B.S. in statistics from Peking University and an M.S. in statistics from the University of Chicago, and did research in natural language processing with <a href="https://www.hongyuanmei.com/">Hongyuan Mei</a> and <a href="https://airsplay.github.io/">Hao Tan</a>.
+    </p>
+    <div class="notice">
+        <b>I am on the job market for full-time industry positions starting in 2027.</b> I am also open to summer 2027 internships. Feel free to reach out by <a href="mailto:shuox@ttic.edu">email</a>.
+    </div>
+</section>
 
-<p>
-Outside of research, I enjoy cooking, learning Japanese on Duolingo, playing squash and bouldering. <br>
+<section>
+    <h2>Experience</h2>
+    <div class="row">
+        <span><b>Jane Street</b>, New York &mdash; Research Intern</span>
+        <span class="when">May &ndash; Aug 2026</span>
+    </div>
+</section>
 
-During my undergraduate time, I was a member of the Peking University Softball Team and the captain of the Softball Team of School of Mathematical Sciences. 
-</p>
+<section>
+    <h2>Publications</h2>
+    <p class="note">($\alpha$-$\beta$) indicates alphabetical order. * indicates equal contribution.</p>
+    <ul class="pubs">
+        <li>
+            <div class="venue">ICLR 2026</div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2511.20584">A Tale of Two Geometries: Adaptive Optimizers and Non-Euclidean Descent</a></div>
+                <div class="pub-authors"><b>Shuo Xie*</b>, Tianhao Wang*, Beining Wu, Zhiyuan Li</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">NeurIPS 2025<br>OPT Workshop<br><span class="tag">ORAL</span></div>
+            <div>
+                <div class="pub-title"><a href="https://www.arxiv.org/abs/2512.00763">Provable Benefit of Sign Descent: A Minimal Model Under Heavy-Tailed Class Imbalance</a></div>
+                <div class="pub-authors">Robin Yadav, <b>Shuo Xie</b>, Tianhao Wang, Zhiyuan Li</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">ICML 2025</div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2506.01936">Should Decision-Makers Reveal the Classifiers in Online Strategic Classification?</a></div>
+                <div class="pub-authors">($\alpha$-$\beta$) Han Shao, <b>Shuo Xie</b>, Kunhe Yang</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">ICML 2025</div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2503.10537">Structured Preconditioners in Adaptive Optimization: A Unified Analysis</a></div>
+                <div class="pub-authors"><b>Shuo Xie</b>, Tianhao Wang, Sashank Reddi, Sanjiv Kumar, Zhiyuan Li</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">ICLR 2025<br><span class="tag">SPOTLIGHT</span></div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2410.08198">Adam Exploits ℓ<sub>∞</sub>-geometry of Loss Landscape via Coordinate-wise Adaptivity</a></div>
+                <div class="pub-authors"><b>Shuo Xie</b>, Mohamad Amin Mohamadi, Zhiyuan Li</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">ICML 2024</div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2404.04454">Implicit Bias of AdamW: ℓ<sub>∞</sub>-Norm Constrained Optimization</a></div>
+                <div class="pub-authors"><b>Shuo Xie</b>, Zhiyuan Li</div>
+            </div>
+        </li>
+        <li>
+            <div class="venue">EMNLP 2022<br>Findings</div>
+            <div>
+                <div class="pub-title"><a href="https://arxiv.org/abs/2210.10041">Hidden State Variability of Pretrained Language Models Can Guide Computation Reduction for Transfer Learning</a></div>
+                <div class="pub-authors"><b>Shuo Xie</b>, Jiahao Qiu, Ankita Pasad, Li Du, Qing Qu, Hongyuan Mei</div>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Honors and Awards</h2>
+    <ul class="plain">
+        <li>Gold Medal, Chinese Mathematical Olympiad (CMO)</li>
+        <li>Rank 1st, Chinese Girls’ Mathematical Olympiad (CGMO)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Miscellaneous</h2>
+    <p>
+    Outside of research, I enjoy cooking, learning Japanese on Duolingo, playing squash and bouldering.
+    During my undergraduate years, I was a member of the Peking University Softball Team and captain of the softball team of the School of Mathematical Sciences.
+    </p>
+</section>
+
+<footer>&copy; 2026 Shuo Xie</footer>
+
+</main>
+</div>
 </body>
 </html>
